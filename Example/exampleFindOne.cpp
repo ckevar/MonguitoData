@@ -2,7 +2,7 @@
 #include <cstring>
 #include <PapayitaWC.h>
 
-#include "MonguitoData.h"
+#include "monguitodata.h"
 
 int main(int argc, char const *argv[])
 {
