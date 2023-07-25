@@ -1,5 +1,5 @@
 CPP = g++
-CFLAGS = -lssl -lcrypto -lpapayitawc -I. -Wall
+CFLAGS = -lssl -lcrypto -lpapayitawc -I. -Wall -O2
 
 EXP_DIR = Example
 
@@ -17,9 +17,9 @@ test: test/test.cpp monguitodata.cpp
 	$(CPP) -o main $^  $(CFLAGS)
 
 install: libmonguitodata.so
-	cp $^ $(ME_LIB_DIR)/lib/
-	cp PapayitaWC.h $(ME_LIB_DIR)/include/
-	ldconfig
+	@install $^ $(ME_LIB_DIR)/lib/
+	@install monguitodata.h $(ME_LIB_DIR)/include/
+	@ldconfig
 
 libmonguitodata.so: monguitodata.cpp monguitodata.h
 	$(CPP) -fPIC -shared -o $@ monguitodata.cpp $(CFLAGS)

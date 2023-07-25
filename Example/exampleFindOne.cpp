@@ -4,17 +4,21 @@
 
 #include "monguitodata.h"
 
+#define BUFF_CAPACTIY 22000 
+
 int main(int argc, char const *argv[])
 {
 	PapayitaWC papayita;
+	papayita_buffer buff;
 	MonguitoData myMongo(&papayita, "<APP_ID>", "<TOKEN>");
-	int buff_size = 22000;
-	char buff[buff_size];
+	char buff_core[BUFF_CAPACTIY];
+	buff.capacity = BUFF_CAPACTIY;
+	buff.head = buff;
 
 	char collection[] = "<COLLECTION>";
 	char itemTag[] = "<YOUR_FILTER>";
 
-	int buff_io = sprintf(buff, "{\
+	int buff.size = sprintf(buff.head, "{\
 \"dataSource\":\"<DATA_SOURCE>\",\
 \"collection\":\"%s\",\
 \"database\":\"<DATABASE>\",\
@@ -22,7 +26,7 @@ int main(int argc, char const *argv[])
 \"<YOUR_FILTER>\":\"%s\"\
 }}", collection, itemTag);
 
-	buff_io = myMongo.findOne(buff, buff_io, buff_size);
+	buff_io = myMongo.findOne(&buff);
 	std::cout << buff << std::endl;
 	/* code */
 	return 0;
